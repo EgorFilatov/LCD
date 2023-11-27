@@ -25,6 +25,7 @@
 #include <Button.h>
 #include <menu.h>
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -130,7 +131,7 @@ int main(void)
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 	I2CSettings i2cSettings { &hi2c1, 0x4E };
-
+/*
 	lcdInit(i2cSettings);
 	menuInit();
 
@@ -138,12 +139,14 @@ int main(void)
 	currentScreen->displayDateTime();
 
 	setDateTime();
+	*/
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  /*
 
 		if (currentScreen == &dateTimeScreen) {
 			getDateTime();
@@ -259,6 +262,7 @@ int main(void)
 				}
 			}
 		}
+		*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -3,11 +3,15 @@
 
 #include "main.h"
 #include <vector>
+#include <string>
+
+class MenuItem;// Forward-декларация класса
 
 class Menu {
 private:
 	Menu *parentMenu;
-	std::vector<MenuItem> menuItems;
+	std::string header;
+	std::vector<MenuItem> *menuItems;
 	uint8_t isCursorEnabled;
 	uint8_t cursorPos;
 	uint8_t numOfMenuItems;
