@@ -17,9 +17,8 @@ private:
 	};
 
 	std::vector<MenuItem> menuItems;
-	uint8_t isCursorEnabled;
 	uint8_t cursorPos;
-	uint8_t shiftUp;
+	uint8_t menuShift;
 
 public:
 	Menu(Menu *parentMenu);
@@ -32,6 +31,7 @@ public:
 	void moveBackward();
 	void addMenuItem();
 	void deleteMenuItem();
+	uint8_t getMenuShift();
 };
 
 #endif /* MENU_H_ */
