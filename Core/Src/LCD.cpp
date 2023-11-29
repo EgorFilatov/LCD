@@ -1,7 +1,138 @@
 #include "LCD.h"
 
 LCD::LCD() {
+}
+
+uint8_t LCD::setCharPos(uint8_t row, uint8_t column) {
+	uint8_t ddramAddrArr[4][20];
+	for (uint8_t i = 0; i < 20; i++) {
+		ddramAddrArr[0][i] = i;
+		ddramAddrArr[1][i] = 64 + i;
+		ddramAddrArr[2][i] = 20 + i;
+		ddramAddrArr[3][i] = 84 + i;
+	}
+
+	uint8_t ddramAddr = ddramAddrArr[row][column];
+
+	uint8_t upperBite = (ddramAddr | 0x80) & 0xF0;
+	uint8_t lowerBite = (ddramAddr << 4) & 0xF0;
+
+	uint8_t byteArr[4] { };
+
+	byteArr[0] = upperBite | E;
+	byteArr[1] = 0;
+	byteArr[2] = lowerBite | E;
+	byteArr[3] = 0;
+
+	if (i2cHandle->State == HAL_I2C_STATE_READY) {
+		HAL_I2C_Master_Transmit_DMA(i2cHandle, lcdAddress, byteArr, 4);
+		return 1;
+	}
+	return 0;
+}
+
+uint8_t LCD::sendByte(uint8_t byte, uint8_t isCharacter) {
+	uint8_t upperBite = byte & 0xF0;
+	uint8_t lowerBite = (byte << 4) & 0xF0;
+
+	uint8_t byteArr[4] { };
+
+	byteArr[0] = upperBite | isCharacter | E /*| BACKLIGHT */;
+	byteArr[1] = 0;
+	byteArr[2] = lowerBite | isCharacter | E /*| BACKLIGHT */;
+	byteArr[3] = 0;
+
+	if (i2cHandle->State == HAL_I2C_STATE_READY) {
+		HAL_I2C_Master_Transmit_DMA(i2cHandle, lcdAddress, byteArr, 4);
+		return 1;
+	}
+	return 0;
+}
+
+uint8_t LCD::sendInstruction(uint8_t instruction) {
+	return sendByte(instruction);
+}
+
+uint8_t LCD::displayChar(uint8_t character, uint8_t row, uint8_t column) {
+	if (setCharPos(row, column)) {
+		return sendByte(recodeRusChar(character), 1);
+	}
+	return 0;
+}
+
+uint8_t LCD::displayString(char *string, uint8_t row, uint8_t column) {
+	if (setCharPos(row, column)) {
+		while (*string) {
+			if (sendByte(recodeRusChar(*string), 1)) {
+				++string;
+			} else {
+				return 0;
+			}
+		}
+		return 1;
+	}
+	return 0;
+}
+
+void clearChar(uint8_t charPos, length) {
+	sendLcdChar(0b10000000, charPos, settings);
+}
+
+uint8_t clear() {
+	uint8_t byteArr[4] { 4, 0, 20, 0 };
+
+	if (i2cHandle->State == HAL_I2C_STATE_READY) {
+		HAL_I2C_Master_Transmit_DMA(i2cHandle, lcdAddress, byteArr, 4);
+		return 1;
+	}
+	return 0;
+}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+uint8_t LCD::recodeRusChar(char character) {
+	const char *rusAlphabetLower = "àáâãäå¸æçèéêëìíîïğñòóôõö÷øùúûüışÿ";
+	const char *rusAlphabetUpper = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß";
+
+	uint8_t lcdCodesLower[] = { 'a', 0xB2, 0xB3, 0xB4, 0xE3, 'e', 0xB5, 0xB6,
+			0xB7, 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 'o', 0xBE, 'p', 'c', 0xBF,
+			'y', 0xE4, 'x', 0xE5, 0xC0, 0xC1, 0xE6, 0xC2, 0xC3, 0xC4, 0xC5,
+			0xC6, 0xC7 };
+
+	uint8_t lcdCodesUpper[] = { 'A', 0xA0, 'B', 0xA1, 0xE0, 'E', 0xA2, 0xA3,
+			0xA4, 0xA5, 0xA6, 'K', 0xA7, 'M', 'H', 'O', 0xA8, 'P', 'C', 'T',
+			0xA9, 0xAA, 'X', 0xE1, 0xAB, 0xAC, 0xE2, 0xAD, 0xAE, 'b', 0xAF,
+			0xB0, 0xB1 };
+
+	char *rusCharPtr;
+
+	rusCharPtr = strchr(rusAlphabetLower, character);
+	if (rusCharPtr != nullptr) {
+		return lcdCodesLower[rusCharPtr - rusAlphabetLower];
+	}
+
+	rusCharPtr = strchr(rusAlphabetUpper, character);
+	if (rusCharPtr != nullptr) {
+		return lcdCodesUpper[rusCharPtr - rusAlphabetUpper];
+	}
+
+	return character;
 }
 
