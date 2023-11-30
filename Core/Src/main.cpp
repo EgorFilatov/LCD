@@ -17,15 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include <lcd_i2c_lib.h>
-#include <main.h>
-#include <rtc.h>
-#include <Screen.h>
-#include <Button.h>
-#include <menu.h>
-
-
+#include "LCD.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -59,17 +51,7 @@ DMA_HandleTypeDef hdma_usart2_rx;
 DMA_HandleTypeDef hdma_usart2_tx;
 
 /* USER CODE BEGIN PV */
-char time[10] { };
-char date[10] { };
 
-uint8_t flag = 0;
-
-extern uint8_t i2cLcdState;
-
-Button downButton(GPIOA, 10, 5);
-Button upButton(GPIOA, 4, 5);
-Button enterButton(GPIOA, 5, 5);
-Button backButton(GPIOA, 0, 5);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,7 +70,7 @@ static void MX_RTC_Init(void);
 
 /* ������� ���������� �� ��������� �������� �� i2c */
 void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
-	i2cLcdState = 0;
+
 }
 /* ������� ���������� �� ��������� �������� �� uart */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
@@ -130,139 +112,16 @@ int main(void)
   MX_USART2_UART_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-	I2CSettings i2cSettings { &hi2c1, 0x4E };
-/*
-	lcdInit(i2cSettings);
-	menuInit();
-
-	Screen *currentScreen = &dateTimeScreen;
-	currentScreen->displayDateTime();
-
-	setDateTime();
-	*/
+	LCD WH2004(&hi2c1, 0x4E);
+	uint8_t a = WH2004.displayChar(3, 1, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  /*
 
-		if (currentScreen == &dateTimeScreen) {
-			getDateTime();
-			dateTimeScreen.resetLineVal(time, 0);
-			dateTimeScreen.resetLineVal(date, 1);
-			currentScreen->displayDateTime();
 
-			if (downButton.clicked() && downButton.getPrevSt() == 0) {
-				downButton.setPrevSt(1);
-				sendLcdInstruction(0b00000100, i2cSettings);
-				HAL_Delay(40);
-				clearLcd(i2cSettings);
-				HAL_Delay(3);
-				currentScreen->selectItem()->displayOneCol(1, 0);
-				currentScreen = currentScreen->selectItem();
-			} else if (downButton.getPrevSt() == 1) {
-				if (downButton.unclicked()) {
-					downButton.setPrevSt(0);
-				}
-			}
-
-			if (upButton.clicked() && upButton.getPrevSt() == 0) {
-				upButton.setPrevSt(1);
-				sendLcdInstruction(0b00000100, i2cSettings);
-				HAL_Delay(40);
-				clearLcd(i2cSettings);
-				HAL_Delay(3);
-				currentScreen->selectItem()->displayOneCol(1, 0);
-				currentScreen = currentScreen->selectItem();
-			} else if (upButton.getPrevSt() == 1) {
-				if (upButton.unclicked()) {
-					upButton.setPrevSt(0);
-				}
-			}
-
-			if (enterButton.clicked() && enterButton.getPrevSt() == 0) {
-				enterButton.setPrevSt(1);
-				sendLcdInstruction(0b00000100, i2cSettings);
-				HAL_Delay(40);
-				clearLcd(i2cSettings);
-				HAL_Delay(3);
-				currentScreen->selectItem()->displayOneCol(1, 0);
-				currentScreen = currentScreen->selectItem();
-			} else if (enterButton.getPrevSt() == 1) {
-				if (enterButton.unclicked()) {
-					enterButton.setPrevSt(0);
-				}
-			}
-
-			if (backButton.clicked() && backButton.getPrevSt() == 0) {
-				backButton.setPrevSt(1);
-				sendLcdInstruction(0b00000100, i2cSettings);
-				HAL_Delay(40);
-				clearLcd(i2cSettings);
-				HAL_Delay(3);
-				currentScreen->selectItem()->displayOneCol(1, 0);
-				currentScreen = currentScreen->selectItem();
-			} else if (backButton.getPrevSt() == 1) {
-				if (backButton.unclicked()) {
-					backButton.setPrevSt(0);
-				}
-			}
-
-		} else {
-			if (downButton.clicked() && downButton.getPrevSt() == 0) {
-				downButton.setPrevSt(1);
-				currentScreen->cursorDown();
-			} else if (downButton.getPrevSt() == 1) {
-				if (downButton.unclicked()) {
-					downButton.setPrevSt(0);
-				}
-			}
-
-			if (upButton.clicked() && upButton.getPrevSt() == 0) {
-				upButton.setPrevSt(1);
-				currentScreen->cursorUp();
-			} else if (upButton.getPrevSt() == 1) {
-				if (upButton.unclicked()) {
-					upButton.setPrevSt(0);
-				}
-			}
-
-			if (enterButton.clicked() && enterButton.getPrevSt() == 0) {
-				enterButton.setPrevSt(1);
-				sendLcdInstruction(0b00000100, i2cSettings);
-				HAL_Delay(40);
-				clearLcd(i2cSettings);
-				HAL_Delay(3);
-				currentScreen = currentScreen->selectItem();
-				currentScreen->displayOneCol(1, 0);
-			} else if (enterButton.getPrevSt() == 1) {
-				if (enterButton.unclicked()) {
-					enterButton.setPrevSt(0);
-				}
-			}
-
-			if (backButton.clicked() && backButton.getPrevSt() == 0) {
-				backButton.setPrevSt(1);
-				sendLcdInstruction(0b00000100, i2cSettings);
-				HAL_Delay(40);
-				clearLcd(i2cSettings);
-				HAL_Delay(3);
-				currentScreen = currentScreen->getParent();
-				if (currentScreen != &dateTimeScreen) {
-					currentScreen->displayOneCol(1, 0);
-				} else {
-					currentScreen->displayDateTime();
-				}
-
-			} else if (backButton.getPrevSt() == 1) {
-				if (backButton.unclicked()) {
-					backButton.setPrevSt(0);
-				}
-			}
-		}
-		*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

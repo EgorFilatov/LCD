@@ -1,6 +1,23 @@
 #include "LCD.h"
 
-LCD::LCD() {
+LCD::LCD(I2C_HandleTypeDef *i2cHandle, uint8_t lcdAddress) :
+		i2cHandle(i2cHandle), lcdAddress(lcdAddress) {
+	HAL_Delay(50);
+
+	sendInstruction(0b00110000); // 8ми битный интерфейс
+	HAL_Delay(40);
+
+	sendInstruction(0b00000010); // Установка курсора в начале строки
+	HAL_Delay(40);
+
+	sendInstruction(0b00001100); // Нормальный режим работы, выкл курсор
+	HAL_Delay(40);
+
+	sendInstruction(0b00000100);
+	HAL_Delay(40);
+
+	sendInstruction(0b00000001); // Очистка дисплея
+	HAL_Delay(2);
 }
 
 uint8_t LCD::setCharPos(uint8_t row, uint8_t column) {
@@ -74,11 +91,16 @@ uint8_t LCD::displayString(char *string, uint8_t row, uint8_t column) {
 	return 0;
 }
 
-void clearChar(uint8_t charPos, length) {
-	sendLcdChar(0b10000000, charPos, settings);
+uint8_t LCD::clearChar(uint8_t row, uint8_t column, uint8_t length) {
+	for (uint8_t i = 0; i < length; ++i) {
+		if (!(displayChar(128, row, column + i))) {
+			return 0;
+		}
+	}
+	return 1;
 }
 
-uint8_t clear() {
+uint8_t LCD::clear() {
 	uint8_t byteArr[4] { 4, 0, 20, 0 };
 
 	if (i2cHandle->State == HAL_I2C_STATE_READY) {
