@@ -1,8 +1,12 @@
 C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\arm-none-eabi\thumb\v6-m\nofp\bits\gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
-../Core/Src/LCD.cpp:3:1:LCD::LCD()	16	static
-../Core/Src/LCD.cpp:6:9:uint8_t LCD::setCharPos(uint8_t, uint8_t)	112	static
-../Core/Src/LCD.cpp:34:9:uint8_t LCD::sendByte(uint8_t, uint8_t)	32	static
-../Core/Src/LCD.cpp:52:9:uint8_t LCD::sendInstruction(uint8_t)	16	static
-../Core/Src/LCD.cpp:56:9:uint8_t LCD::displayChar(uint8_t, uint8_t, uint8_t)	24	static
-../Core/Src/LCD.cpp:63:9:uint8_t LCD::displayString(char*, uint8_t, uint8_t)	24	static
-../Core/Src/LCD.cpp:96:9:uint8_t LCD::recodeRusChar(char)	112	static
+../Core/Src/LCD.cpp:3:1:LCD::LCD(I2C_HandleTypeDef*, uint8_t)	24	static
+../Core/Src/LCD.cpp:22:6:void LCD::setCharPos(uint8_t, uint8_t)	112	static
+../Core/Src/LCD.cpp:48:6:void LCD::sendByte(uint8_t, uint8_t)	32	static
+../Core/Src/LCD.cpp:64:6:void LCD::sendInstruction(uint8_t)	16	static
+../Core/Src/LCD.cpp:68:6:void LCD::displayChar(uint8_t, uint8_t, uint8_t)	24	static
+../Core/Src/LCD.cpp:73:6:void LCD::displayString(char*, uint8_t, uint8_t)	24	static
+../Core/Src/LCD.cpp:81:6:void LCD::clearChar(uint8_t, uint8_t, uint8_t)	32	static
+../Core/Src/LCD.cpp:87:6:void LCD::clear()	32	static
+../Core/Src/LCD.cpp:95:9:uint8_t LCD::recodeRusChar(char)	112	static
+../Core/Inc/menu.h:13:9:Menu::MenuItem::~MenuItem()	16	static
+../Core/Src/LCD.cpp:123:6:void LCD::showMenu(Menu, uint8_t)	72	static

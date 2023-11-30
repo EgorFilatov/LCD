@@ -32,6 +32,7 @@ public:
 	void addMenuItem();
 	void deleteMenuItem();
 	uint8_t getMenuShift();
+	MenuItem getMenuItem(uint8_t num);
 };
 
 #endif /* MENU_H_ */

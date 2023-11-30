@@ -43,6 +43,11 @@ void Menu::moveUp() {
 	}
 }
 
+Menu::MenuItem Menu::getMenuItem(uint8_t num) {
+	return menuItems[num];
+}
+
+
 
 
 
