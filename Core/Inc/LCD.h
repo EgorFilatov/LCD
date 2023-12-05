@@ -6,6 +6,7 @@
 
 #include "main.h"
 #include "menu.h"
+#include <string>
 #include <cstring>
 
 class LCD {

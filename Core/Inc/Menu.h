@@ -11,9 +11,9 @@ private:
 	std::string header;
 
 	struct MenuItem {
-		std::string text;
-		uint8_t value;
-		Menu *childMenu;
+		std::string text { "" };
+		uint32_t value { 0 };
+		Menu *childMenu { nullptr };
 	};
 
 	std::vector<MenuItem> menuItems;
@@ -22,7 +22,7 @@ private:
 
 public:
 	Menu(Menu *parentMenu);
-	void addMenuItem(std::string text, uint8_t value, Menu *childMenu);
+	void addMenuItem(std::string text, uint32_t value, Menu *childMenu);
 	void showMenuItemsNumbering();
 	void showCursor();
 	void moveUp();
@@ -32,7 +32,9 @@ public:
 	void addMenuItem();
 	void deleteMenuItem();
 	uint8_t getMenuShift();
+	void setMenuShift(uint8_t shiftVal);
 	MenuItem getMenuItem(uint8_t num);
+	uint8_t getMenuItemsNum();
 };
 
 #endif /* MENU_H_ */

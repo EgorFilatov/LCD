@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "LCD.h"
+#include "Menu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,6 +47,8 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 
 RTC_HandleTypeDef hrtc;
 
+TIM_HandleTypeDef htim6;
+
 UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart2_rx;
 DMA_HandleTypeDef hdma_usart2_tx;
@@ -61,6 +64,7 @@ static void MX_DMA_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_RTC_Init(void);
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -102,16 +106,38 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
   MX_RTC_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	LCD WH2004(&hi2c1, 0x4E);
+	Menu MainMenu(&MainMenu);
+	MainMenu.addMenuItem("Ï0", 0, &MainMenu);
+	MainMenu.addMenuItem("Ï1", 1, &MainMenu);
+	MainMenu.addMenuItem("Ï2", 2, &MainMenu);
+	MainMenu.addMenuItem("Ï3", 3, &MainMenu);
+	MainMenu.addMenuItem("Ï4", 4, &MainMenu);
+	MainMenu.addMenuItem("Ï5", 5, &MainMenu);
+	MainMenu.addMenuItem("Ï6", 6, &MainMenu);
+	MainMenu.addMenuItem("Ï7", 7, &MainMenu);
+	MainMenu.addMenuItem("Ï8", 8, &MainMenu);
+	MainMenu.addMenuItem("Ï9", 9, &MainMenu);
+	MainMenu.addMenuItem("Ï111", 10, &MainMenu);
+	MainMenu.addMenuItem("Ï222", 11, &MainMenu);
+	MainMenu.addMenuItem("Ï12", 12, &MainMenu);
+	MainMenu.addMenuItem("Ï13", 13, &MainMenu);
+	MainMenu.addMenuItem("Ï14", 14, &MainMenu);
+	MainMenu.addMenuItem("Ï15", 15, &MainMenu);
+	MainMenu.addMenuItem("Ï16", 16, &MainMenu);
 
+	MainMenu.showCursor();
+	MainMenu.showMenuItemsNumbering();
+
+	WH2004.showMenu(MainMenu, 2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -274,6 +300,36 @@ static void MX_RTC_Init(void)
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* USER CODE END RTC_Init 2 */
+
+}
+
+/**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 48000 - 1;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 10 - 1;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
 
 }
 

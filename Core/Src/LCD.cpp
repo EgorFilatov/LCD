@@ -120,8 +120,28 @@ uint8_t LCD::recodeRusChar(char character) {
 }
 
 void LCD::showMenu(Menu menu, uint8_t columnsNum) {
-	for (uint8_t i = 0; i < 4; ++i) {
-		displayString(&menu.getMenuItem(i).text[0], i, 0);
+	uint8_t shift = menu.getMenuShift();
+	uint8_t maxTextLength { 0 };
+	for (uint8_t col = 0; col < columnsNum; ++col) {
+
+		for (uint8_t row = 0; row < 4; ++row) {
+			if (row + shift + col * 4 < menu.getMenuItemsNum()) {
+				if (menu.getMenuItem(row + shift + col * 4).text.length() > maxTextLength) {
+					maxTextLength = menu.getMenuItem(row + shift + col * 4).text.length();
+				}
+				displayString(&menu.getMenuItem(row + shift + col * 4).text[0],
+						row, col * 20 / columnsNum);
+			}
+		}
+
+		for (uint8_t row = 0; row < 4; ++row) {
+			if (row + shift + col * 4 < menu.getMenuItemsNum()) {
+				displayString(&std::to_string(menu.getMenuItem(row + shift + col * 4).value)[0],
+						row, col * 20 / columnsNum + maxTextLength + 1);
+			} else {
+				clearChar(row, col * 20 / columnsNum, 20 / columnsNum);
+			}
+		}
 	}
 }
 
