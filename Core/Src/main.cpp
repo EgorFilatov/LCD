@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "LCD.h"
 #include "Menu.h"
+#include "Button.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
