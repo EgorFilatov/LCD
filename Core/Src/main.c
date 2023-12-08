@@ -21,9 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "LCD.h"
-#include "Menu.h"
-#include "Button.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,8 +53,7 @@ DMA_HandleTypeDef hdma_usart2_rx;
 DMA_HandleTypeDef hdma_usart2_tx;
 
 /* USER CODE BEGIN PV */
-Menu *currentMenu = nullptr;
-LCD *currentDisplay = nullptr;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,15 +70,7 @@ static void MX_TIM6_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void moveDown() {
-	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
-	if (currentMenu != nullptr) {
-		currentMenu->moveCursorDown();
-	}
-	if (currentDisplay != nullptr) {
-		currentDisplay->displayMenu(*currentMenu, 2);
-	}
-}
+
 /* USER CODE END 0 */
 
 /**
@@ -118,46 +107,6 @@ int main(void)
   MX_RTC_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-	LCD WH2004(&hi2c1, 0x4E);
-	currentDisplay = &WH2004;
-
-	Menu MainMenu(&MainMenu);
-	currentMenu = &MainMenu;
-
-	MainMenu.addMenuItem("Ï0", 0, &MainMenu);
-	MainMenu.addMenuItem("Ï1", 1, &MainMenu);
-	MainMenu.addMenuItem("Ï2", 2, &MainMenu);
-	MainMenu.addMenuItem("Ï3", 3, &MainMenu);
-	MainMenu.addMenuItem("Ï4", 4, &MainMenu);
-	MainMenu.addMenuItem("Ï5", 5, &MainMenu);
-	MainMenu.addMenuItem("Ï6", 6, &MainMenu);
-	MainMenu.addMenuItem("Ï7", 7, &MainMenu);
-	MainMenu.addMenuItem("Ï8", 8, &MainMenu);
-	MainMenu.addMenuItem("Ï9", 9, &MainMenu);
-	MainMenu.addMenuItem("Ï111", 10, &MainMenu);
-	MainMenu.addMenuItem("Ï222", 11, &MainMenu);
-	MainMenu.addMenuItem("Ï12", 12, &MainMenu);
-	MainMenu.addMenuItem("Ï13", 13, &MainMenu);
-	MainMenu.addMenuItem("Ï14", 14, &MainMenu);
-	MainMenu.addMenuItem("Ï15", 15, &MainMenu);
-	MainMenu.addMenuItem("Ï16", 16, &MainMenu);
-
-	MainMenu.showCursor();
-	MainMenu.showMenuItemsNumbering();
-
-	currentDisplay->displayMenu(*currentMenu, 2);
-
-	Button UpButton(GPIOA, 0, &moveDown);
-	HAL_Delay(1000);
-
-
-
-
-
-
-
-
-
 
   /* USER CODE END 2 */
 
@@ -165,12 +114,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-	  HAL_Delay(1000);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	  HAL_Delay(1000);
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

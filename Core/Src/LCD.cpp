@@ -1,5 +1,7 @@
 #include "LCD.h"
 
+uint8_t i2cMasterTxFlag { 0 };
+
 LCD::LCD(I2C_HandleTypeDef *i2cHandle, uint8_t lcdAddress) :
 		i2cHandle(i2cHandle), lcdAddress(lcdAddress) {
 
@@ -40,9 +42,11 @@ void LCD::setCharPos(uint8_t row, uint8_t column) {
 	byteArr[2] = lowerBite | E;
 	byteArr[3] = 0;
 
+	i2cMasterTxFlag = I2C_BUSY;
 	HAL_I2C_Master_Transmit_DMA(i2cHandle, lcdAddress, byteArr, 4);
 	while (i2cHandle->State == HAL_I2C_STATE_BUSY_TX) {
 	}
+	//HAL_Delay(5);
 }
 
 void LCD::sendByte(uint8_t byte, uint8_t isCharacter) {
@@ -56,9 +60,11 @@ void LCD::sendByte(uint8_t byte, uint8_t isCharacter) {
 	byteArr[2] = lowerBite | isCharacter | E /*| BACKLIGHT */;
 	byteArr[3] = 0;
 
+	i2cMasterTxFlag = I2C_BUSY;
 	HAL_I2C_Master_Transmit_DMA(i2cHandle, lcdAddress, byteArr, 4);
 	while (i2cHandle->State == HAL_I2C_STATE_BUSY_TX) {
 	}
+	//HAL_Delay(5);
 }
 
 void LCD::sendInstruction(uint8_t instruction) {
@@ -85,11 +91,8 @@ void LCD::clearChar(uint8_t row, uint8_t column, uint8_t length) {
 }
 
 void LCD::clear() {
-	uint8_t byteArr[4] { 4, 0, 20, 0 };
-
-	HAL_I2C_Master_Transmit_DMA(i2cHandle, lcdAddress, byteArr, 4);
-	while (i2cHandle->State == HAL_I2C_STATE_BUSY_TX) {
-	}
+	sendInstruction(0b00000001); // Очистка дисплея
+	HAL_Delay(2);
 }
 
 uint8_t LCD::recodeRusChar(char character) {
@@ -119,7 +122,8 @@ uint8_t LCD::recodeRusChar(char character) {
 	return character;
 }
 
-void LCD::showMenu(Menu menu, uint8_t columnsNum) {
+void LCD::displayMenu(Menu menu, uint8_t columnsNum) {
+	clear();
 	uint8_t shift = menu.getMenuShift();
 	uint8_t maxTextLength { 0 };
 	for (uint8_t col = 0; col < columnsNum; ++col) {
@@ -145,4 +149,6 @@ void LCD::showMenu(Menu menu, uint8_t columnsNum) {
 	}
 }
 
-
+I2C_HandleTypeDef* LCD::getI2cHandle() {
+	return i2cHandle;
+}

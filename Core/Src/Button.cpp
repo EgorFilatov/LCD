@@ -1,8 +1,15 @@
 #include "Button.h"
 
-uint8_t isTimerOn = 0;
-TIM_HandleTypeDef* Button::htimX = nullptr;
-TIM_TypeDef* Button::TIMx = nullptr;
+extern I2C_HandleTypeDef hi2c1;
+
+uint8_t Button::isTimerOn = 0;
+TIM_HandleTypeDef* Button::htimX = &htim6;
+TIM_TypeDef* Button::TIMx = TIM6;
+
+std::vector<GPIO_TypeDef*> Button::GPIOx;
+std::vector<uint16_t> Button::pin;
+std::vector<void (*)()> Button::function;
+std::vector<uint8_t> Button::previousButtonState;
 
 Button::Button(GPIO_TypeDef *GPIOx, uint16_t pin, void (*function)()) {
 	if (Button::isTimerOn == 0) {
@@ -20,43 +27,26 @@ void Button::setTimer(TIM_HandleTypeDef* htimX, TIM_TypeDef* TIMx) {
 	Button::TIMx = TIMx;
 }
 
-std::vector<GPIO_TypeDef*> Button::getGPIOx() {
-	return Button::GPIOx;
-}
-std::vector<uint16_t> Button::getPin() {
-	return Button::pin;
-}
-
-std::vector<void (*)()> Button::getFunction() {
-	return Button::function;
-}
-
-std::vector<uint8_t> Button::getPreviousButtonState() {
-	return Button::previousButtonState;
-}
-
-
-
-
-
 TIM_TypeDef* Button::getTIMx() {
 	return Button::TIMx;
 }
 
 void Button::shortPress() {
-	for (uint8_t i = 0; i < Button::getPin().size(); ++i) {
-		if (Button::getGPIOx()[i]->IDR & 1 << Button::getPin()[i]) {
-			switch (Button::getPreviousButtonState()[i]) {
+	for (uint8_t i = 0; i < Button::pin.size(); ++i) {
+		if (Button::GPIOx[i]->IDR & 1 << Button::pin[i]) {
+			switch (Button::previousButtonState[i]) {
 			case 0:
-				Button::getPreviousButtonState()[i] = 1;
+				Button::previousButtonState[i] = 1;
 				break;
 			case 1:
-				Button::getFunction()[i]();
+				Button::previousButtonState[i] = 2;
+				Button::function[i]();
 				break;
 			}
+
 		} else {
-			if (Button::getPreviousButtonState()[i]) {
-				Button::getPreviousButtonState()[i] = 0;
+			if (Button::previousButtonState[i]) {
+				Button::previousButtonState[i] = 0;
 			}
 		}
 	}
@@ -67,6 +57,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		Button::shortPress();
 	}
 }
+
 
 
 

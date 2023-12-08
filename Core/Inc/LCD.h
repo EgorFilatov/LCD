@@ -4,10 +4,15 @@
 #define E    (1 << 2) // Бит, по изменению состояния которого считывается информация
 #define BACKLIGHT (1 << 3) // Управление подсветкой
 
+#define I2C_READY 0
+#define I2C_BUSY 1
+
 #include "main.h"
 #include "menu.h"
 #include <string>
 #include <cstring>
+
+extern uint8_t i2cMasterTxFlag;
 
 class LCD {
 private:
@@ -24,7 +29,8 @@ public:
 	void clearChar(uint8_t row, uint8_t column, uint8_t length = 1);
 	void clear();
 	uint8_t recodeRusChar(char rusChar);
-	void showMenu(Menu menu, uint8_t columnsNum = 1);
+	void displayMenu(Menu menu, uint8_t columnsNum = 1);
+	I2C_HandleTypeDef* getI2cHandle();
 };
 
 #endif /* LCD_H_ */

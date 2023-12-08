@@ -39,13 +39,11 @@ void Menu::showCursor() {
 	}
 }
 
-void Menu::moveUp() {
-	if (cursorPos) {
-		menuItems[cursorPos - 1].text = " " + menuItems[cursorPos - 1].text.erase(0);
-		menuItems[cursorPos].text = ">" + menuItems[cursorPos].text.erase(0);
+void Menu::moveCursorDown() {
+	if (cursorPos && cursorPos < menuItems.size()) {
+		menuItems[cursorPos - 1].text = " " + menuItems[cursorPos - 1].text.erase(0, 1);
+		menuItems[cursorPos].text = ">" + menuItems[cursorPos].text.erase(0, 1);
 		++cursorPos;
-	} else {
-		menuShift += 4;
 	}
 }
 

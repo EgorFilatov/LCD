@@ -18,10 +18,6 @@ private:
 public:
 	Button(GPIO_TypeDef *GPIOx, uint16_t pin, void (*function)());
 	static void setTimer(TIM_HandleTypeDef* htimX = &htim6, TIM_TypeDef* TIMx = TIM6);
-	static std::vector<GPIO_TypeDef*> getGPIOx();
-	static std::vector<uint16_t> getPin();
-	static std::vector<void (*)()> getFunction();
-	static std::vector<uint8_t> getPreviousButtonState();
 	static TIM_TypeDef* getTIMx();
 	static void shortPress();
 };

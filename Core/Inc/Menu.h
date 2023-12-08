@@ -25,8 +25,8 @@ public:
 	void addMenuItem(std::string text, uint32_t value, Menu *childMenu);
 	void showMenuItemsNumbering();
 	void showCursor();
-	void moveUp();
-	void moveDown();
+	void moveCursorUp();
+	void moveCursorDown();
 	void moveForward();
 	void moveBackward();
 	void addMenuItem();
@@ -35,6 +35,7 @@ public:
 	void setMenuShift(uint8_t shiftVal);
 	MenuItem getMenuItem(uint8_t num);
 	uint8_t getMenuItemsNum();
+	uint8_t getCursorPos();
 };
 
 #endif /* MENU_H_ */

@@ -8,12 +8,12 @@ C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Src/Menu.cpp:7:6:void Menu::addMenuItem(std::string, uint32_t, Menu*)	1
 ../Core/Src/Menu.cpp:14:6:void Menu::showMenuItemsNumbering()	5
 ../Core/Src/Menu.cpp:32:6:void Menu::showCursor()	3
-../Core/Src/Menu.cpp:42:6:void Menu::moveUp()	2
+../Core/Src/Menu.cpp:42:6:void Menu::moveCursorDown()	4
 ../Core/Inc/Menu.h:13:9:Menu::MenuItem::MenuItem(const Menu::MenuItem&)	1
 ../Core/Inc/Menu.h:13:9:Menu::MenuItem::~MenuItem()	1
-../Core/Src/Menu.cpp:52:16:Menu::MenuItem Menu::getMenuItem(uint8_t)	1
-../Core/Src/Menu.cpp:56:9:uint8_t Menu::getMenuShift()	1
-../Core/Src/Menu.cpp:60:9:uint8_t Menu::getMenuItemsNum()	1
+../Core/Src/Menu.cpp:50:16:Menu::MenuItem Menu::getMenuItem(uint8_t)	1
+../Core/Src/Menu.cpp:54:9:uint8_t Menu::getMenuShift()	1
+../Core/Src/Menu.cpp:58:9:uint8_t Menu::getMenuItemsNum()	1
 C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/charconv.h:47:5:constexpr unsigned int std::__detail::__to_chars_len(_Tp, int) [with _Tp = unsigned int]	5
 C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/charconv.h:72:5:void std::__detail::__to_chars_10_impl(char*, unsigned int, _Tp) [with _Tp = unsigned int]	3
 C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/stl_vector.h:131:2:std::_Vector_base<_Tp, _Alloc>::_Vector_impl::_Vector_impl() [with _Tp = Menu::MenuItem; _Alloc = std::allocator<Menu::MenuItem>]	1
