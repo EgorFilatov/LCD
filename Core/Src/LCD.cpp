@@ -3,7 +3,7 @@
 uint8_t i2cMasterTxFlag { 0 };
 
 LCD::LCD(I2C_HandleTypeDef *i2cHandle, uint8_t lcdAddress) :
-		i2cHandle(i2cHandle), lcdAddress(lcdAddress) {
+		i2cHandle(i2cHandle), lcdAddress(lcdAddress), columnsNum(0) {
 
 	sendInstruction(0b00110000); // 8ми битный интерфейс
 	HAL_Delay(40);
@@ -123,6 +123,7 @@ uint8_t LCD::recodeRusChar(char character) {
 }
 
 void LCD::displayMenu(Menu menu, uint8_t columnsNum) {
+	this->columnsNum = columnsNum;
 	clear();
 	uint8_t shift = menu.getMenuShift();
 	uint8_t maxTextLength { 0 };
@@ -151,4 +152,8 @@ void LCD::displayMenu(Menu menu, uint8_t columnsNum) {
 
 I2C_HandleTypeDef* LCD::getI2cHandle() {
 	return i2cHandle;
+}
+
+uint8_t LCD::getColumnsNum() {
+	return columnsNum;
 }

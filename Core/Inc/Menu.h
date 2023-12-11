@@ -26,13 +26,14 @@ public:
 	void showMenuItemsNumbering();
 	void showCursor();
 	void moveCursorUp();
-	void moveCursorDown();
+	uint8_t moveCursorDown();
 	void moveForward();
 	void moveBackward();
 	void addMenuItem();
 	void deleteMenuItem();
 	uint8_t getMenuShift();
 	void setMenuShift(uint8_t shiftVal);
+	void incrementMenuShift();
 	MenuItem getMenuItem(uint8_t num);
 	uint8_t getMenuItemsNum();
 	uint8_t getCursorPos();

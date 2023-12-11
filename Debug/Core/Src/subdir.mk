@@ -11,7 +11,6 @@ CPP_SRCS += \
 ../Core/Src/main.cpp 
 
 C_SRCS += \
-../Core/Src/main.c \
 ../Core/Src/stm32f0xx_hal_msp.c \
 ../Core/Src/stm32f0xx_it.c \
 ../Core/Src/syscalls.c \
@@ -19,7 +18,6 @@ C_SRCS += \
 ../Core/Src/system_stm32f0xx.c 
 
 C_DEPS += \
-./Core/Src/main.d \
 ./Core/Src/stm32f0xx_hal_msp.d \
 ./Core/Src/stm32f0xx_it.d \
 ./Core/Src/syscalls.d \

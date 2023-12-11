@@ -75,12 +75,21 @@ static void MX_TIM6_Init(void);
 /* USER CODE BEGIN 0 */
 void moveDown() {
 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
-	if (currentMenu != nullptr) {
-		currentMenu->moveCursorDown();
-	}
-	if (currentDisplay != nullptr) {
+	if (currentMenu != nullptr && currentDisplay != nullptr) {
+		if (currentMenu->getCursorPos()) {
+			if (currentMenu->moveCursorDown()) {
+				if (currentMenu->getCursorPos() > currentDisplay->getColumnsNum() * 4) {
+					currentMenu->incrementMenuShift();
+				}
+			} else {
+				currentMenu->setMenuShift(0);
+			}
+		} else {
+			currentMenu->setMenuShift(currentMenu->getMenuShift() + currentDisplay->getColumnsNum() * 4);
+		}
 		currentDisplay->displayMenu(*currentMenu, 2);
 	}
+
 }
 /* USER CODE END 0 */
 
@@ -134,15 +143,15 @@ int main(void)
 	MainMenu.addMenuItem("Ï7", 7, &MainMenu);
 	MainMenu.addMenuItem("Ï8", 8, &MainMenu);
 	MainMenu.addMenuItem("Ï9", 9, &MainMenu);
-	MainMenu.addMenuItem("Ï111", 10, &MainMenu);
-	MainMenu.addMenuItem("Ï222", 11, &MainMenu);
+	MainMenu.addMenuItem("Ï10", 10, &MainMenu);
+	MainMenu.addMenuItem("Ï11", 11, &MainMenu);
 	MainMenu.addMenuItem("Ï12", 12, &MainMenu);
 	MainMenu.addMenuItem("Ï13", 13, &MainMenu);
 	MainMenu.addMenuItem("Ï14", 14, &MainMenu);
 	MainMenu.addMenuItem("Ï15", 15, &MainMenu);
 	MainMenu.addMenuItem("Ï16", 16, &MainMenu);
 
-	MainMenu.showCursor();
+	//MainMenu.showCursor();
 	MainMenu.showMenuItemsNumbering();
 
 	currentDisplay->displayMenu(*currentMenu, 2);

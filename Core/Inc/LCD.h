@@ -18,6 +18,7 @@ class LCD {
 private:
 	I2C_HandleTypeDef *i2cHandle;
 	uint8_t lcdAddress;
+	uint8_t columnsNum;
 
 public:
 	LCD(I2C_HandleTypeDef *i2cHandle, uint8_t lcdAddress);
@@ -31,6 +32,7 @@ public:
 	uint8_t recodeRusChar(char rusChar);
 	void displayMenu(Menu menu, uint8_t columnsNum = 1);
 	I2C_HandleTypeDef* getI2cHandle();
+	uint8_t getColumnsNum();
 };
 
 #endif /* LCD_H_ */

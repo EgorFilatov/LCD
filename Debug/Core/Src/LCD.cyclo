@@ -1,5 +1,5 @@
-C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\arm-none-eabi\thumb\v6-m\nofp\bits\gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	1
-C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\basic_string.h:6690:3:std::string std::__cxx11::to_string(long unsigned int)	1
+C:\ST\STM32CubeIDE_1.10.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\arm-none-eabi\thumb\v6-m\nofp\bits\gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	1
+C:\ST\STM32CubeIDE_1.10.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\basic_string.h:6690:3:std::string std::__cxx11::to_string(long unsigned int)	1
 ../Core/Src/LCD.cpp:5:1:LCD::LCD(I2C_HandleTypeDef*, uint8_t)	1
 ../Core/Src/LCD.cpp:24:6:void LCD::setCharPos(uint8_t, uint8_t)	3
 ../Core/Src/LCD.cpp:52:6:void LCD::sendByte(uint8_t, uint8_t)	2
@@ -11,6 +11,7 @@ C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Src/LCD.cpp:98:9:uint8_t LCD::recodeRusChar(char)	3
 ../Core/Inc/menu.h:13:9:Menu::MenuItem::~MenuItem()	1
 ../Core/Src/LCD.cpp:125:6:void LCD::displayMenu(Menu, uint8_t)	9
-../Core/Src/LCD.cpp:152:20:I2C_HandleTypeDef* LCD::getI2cHandle()	1
-C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/charconv.h:47:5:constexpr unsigned int std::__detail::__to_chars_len(_Tp, int) [with _Tp = long unsigned int]	5
-C:\ST\STM32CubeIDE_1.12.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/charconv.h:72:5:void std::__detail::__to_chars_10_impl(char*, unsigned int, _Tp) [with _Tp = long unsigned int]	3
+../Core/Src/LCD.cpp:153:20:I2C_HandleTypeDef* LCD::getI2cHandle()	1
+../Core/Src/LCD.cpp:157:9:uint8_t LCD::getColumnsNum()	1
+C:\ST\STM32CubeIDE_1.10.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/charconv.h:47:5:constexpr unsigned int std::__detail::__to_chars_len(_Tp, int) [with _Tp = long unsigned int]	5
+C:\ST\STM32CubeIDE_1.10.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/include/c++/11.3.1/bits/charconv.h:72:5:void std::__detail::__to_chars_10_impl(char*, unsigned int, _Tp) [with _Tp = long unsigned int]	3

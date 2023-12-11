@@ -39,11 +39,17 @@ void Menu::showCursor() {
 	}
 }
 
-void Menu::moveCursorDown() {
+uint8_t Menu::moveCursorDown() {
 	if (cursorPos && cursorPos < menuItems.size()) {
 		menuItems[cursorPos - 1].text = " " + menuItems[cursorPos - 1].text.erase(0, 1);
 		menuItems[cursorPos].text = ">" + menuItems[cursorPos].text.erase(0, 1);
 		++cursorPos;
+		return 1;
+	} else {
+		menuItems[cursorPos - 1].text = " " + menuItems[cursorPos - 1].text.erase(0, 1);
+		menuItems[0].text = ">" + menuItems[0].text.erase(0, 1);
+		cursorPos = 1;
+		return 0;
 	}
 }
 
@@ -59,6 +65,22 @@ uint8_t Menu::getMenuItemsNum() {
 	return menuItems.size();
 }
 
+uint8_t Menu::getCursorPos() {
+	return cursorPos;
+}
+
+void Menu::setMenuShift(uint8_t shiftVal) {
+	if (shiftVal < menuItems.size()) {
+		menuShift = shiftVal;
+	} else {
+		menuShift = 0;
+	}
+
+}
+
+void Menu::incrementMenuShift() {
+	++menuShift;
+}
 
 
 
